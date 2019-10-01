@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Matador de Monstro</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="panel scores">
+            <div class="score">
+                <h1>Jogador</h1>
+                <div class="life-bar">
+                    <div class="life" :class="{danger: playerLife < 20}" :style="{width: playerLife + '%'}"></div>
+                </div>
+                <div>{{ playerLife }}%</div>
+            </div>
+
+            <div class="score">
+                <h1>Monstro</h1>
+                <div class="life-bar">
+                    <div class="life" :class="{danger: monsterLife < 20}" :style="{width: monsterLife + '%'}"></div>
+                </div>
+            <div>{{ monsterLife }}%</div>
+            </div>
+        </div>
+
+        <div class="panel result" v-if="resultado">
+            <h2 v-if="monsterLife == 0" class="win">Você ganhou!!!!</h2>
+            <h2 v-else class="loss">Você perdeu :(</h2>
+        </div>
+
+        <div class="panel buttons">
+            <button v-if="novojogo" @click="resetgame()" class="btn newgame">Iniciar novo jogo</button>
+            <div v-else>
+                <button @click="ataque(false)" class="btn attack">Ataque</button>
+                <button @click="ataque(true)" class="btn especial-attack">Ataque Especial</button>
+                <button @click="curar()" class="btn heal">Curar</button>
+                <button @click="resetgame()" class="btn giveup">Desistir</button>
+            </div>
+        </div>
+
+        <div class="panel logs" v-if="logs.length">
+            <ul>
+                <li class="log" v-for="log in logs" :Class="log.classe">{{ log.texto }}</li>
+            </ul>
+
+        </div>
+    </div>
+</body>
+<script src="app.js"></script>
+</html>
